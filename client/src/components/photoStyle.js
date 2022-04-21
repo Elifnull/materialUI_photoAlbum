@@ -12,11 +12,12 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     ContainerGrid: {
-        padding: theme.spacing(4,0),
+        padding: theme.spacing(4),
     },
     Card: {
         display: "flex",
         height: "100%",
+        width: '30vh',
         flexDirection: "column",
     },
     Photo: {

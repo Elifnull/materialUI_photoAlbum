@@ -9,6 +9,9 @@ const PhotoSchema = new mongoose.Schema({
     picture: {
         type: String,
         required: [true, "art is pictures in this case"]
+    },
+    comment: {
+        type: String,
     }
 },{ timestamps: true});
 
