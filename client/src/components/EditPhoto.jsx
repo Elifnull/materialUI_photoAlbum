@@ -5,16 +5,17 @@ import Header from "./Header";
 import axios from "axios";
 import {Link, useNavigate, useParams} from "react-router-dom";
 
-const CreatePhoto = () =>{
+const EditPhoto = (props)=> {
     const [name, setName] = useState('');
     const [picture, setPicture] = useState('');
     const [comment, setComment] = useState('');
     const [error, setError] = useState([]);
-
     const navigate = useNavigate();
+    const { id } = useParams();
+
     const submitHandler = (element) => {
         element.preventDefault();
-        axios.post('http://localhost:8000/api/photos',{
+        axios.put(`http://localhost:8000/api/photos/${id}`,{
             name,
             picture,
             comment
@@ -28,8 +29,16 @@ const CreatePhoto = () =>{
                 setError(error.response.data.errors)
             });
     }
-   
-
+    useEffect(()=>{
+        axios.get(`http://localhost:8000/api/photos/${id}`)
+            .then(response => {
+                console.log(response.data)
+                setName(response.data.name);
+                setPicture(response.data.picture);
+                setComment(response.data.comment);
+            })
+            .catch(err => console.log(err))
+    },[id])
     return(
         <>
         <CssBaseline /> {/* this adds basic Css styling to the whole app*/}
@@ -83,14 +92,14 @@ const CreatePhoto = () =>{
                         </Grid>
                     </Grid>
                     <Button 
-                    color="primary"
+                    color="secondary"
                     type="submit" 
                     variant="contained" 
-                    sx={{mt:5, mb: 3}}>Add Photo</Button>
+                    sx={{mt:5, mb: 3}}>Edit Photo</Button>
                 </Box>
             </Box>
         </>
     )
 }
 
-export default CreatePhoto;
+export default EditPhoto;
